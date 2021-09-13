@@ -68,10 +68,14 @@ public class Assignmnet1 : ProcessingLite.GP21
     float borderLineYMax = 11.5f;
     float borderLineYMin = 2.5f;
 
-    public float snakeSpeed;
-    public float snakeSpeedTimer = 0.2f;
-    public int snakeSize = 10;
-    public float snakeLength = 4f;
+    [SerializeField]
+    private float snakeSpeed;
+    [SerializeField]
+    private float snakeSpeedTimer = 0.2f;
+    [SerializeField]
+    private int snakeSize = 10;
+    [SerializeField]
+    private float snakeLength = 4f;
     int snakeColorR = 23;
     int snakeColorB = 128;
     int snakeColorG = 190;
@@ -178,13 +182,12 @@ public class Assignmnet1 : ProcessingLite.GP21
     }
     private void paint()
     {
-        
+        //This is free painting, paints a small line, aka dot, att mouse position for as long as you hold down mouse click
         if (Input.GetMouseButton(0) && count == 0)
         {
             mousePos = Input.mousePosition;
             mousePos.z = Camera.main.nearClipPlane;
             worldPosFirstClick = Camera.main.ScreenToWorldPoint(mousePos);
-
         }
         else if (Input.GetMouseButtonUp(0))
         {
@@ -277,7 +280,6 @@ public class Assignmnet1 : ProcessingLite.GP21
             //Changes backcolor in real time
             background.color = new Color32((byte)backgroundColorR, (byte)backgroundColorG, (byte)backgroundColorB, 255);
             
-
             previousBackgroundColorR = backgroundColorR;
             previousBackgroundColorG = backgroundColorG;
             previousBackgroundColorB = backgroundColorB;
@@ -295,7 +297,6 @@ public class Assignmnet1 : ProcessingLite.GP21
         Line(borderLineXMin + x, borderLineYMin + y,borderLineXMax + x, borderLineYMin + y);
         Line(borderLineXMax + x, borderLineYMax + y, borderLineXMax + x, borderLineYMin + y);
         Line(borderLineXMin + x, borderLineYMax + y, borderLineXMax + x, borderLineYMax + y);
-
         if (alive)
         {
             snakeMovement();
@@ -490,6 +491,8 @@ public class Assignmnet1 : ProcessingLite.GP21
         foreach (LineData line in lines)
         {
             i++;
+
+            //Sorts the x and y´s for easy check if the snakes is within them, aka hits itself
             if(line.x1 > line.x2)
             {
                 bigX = line.x1;
