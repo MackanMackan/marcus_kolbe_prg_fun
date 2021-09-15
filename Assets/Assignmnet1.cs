@@ -214,9 +214,6 @@ public class Assignmnet1 : ProcessingLite.GP21
 
         // it takes the background color in real time, if the background would change in runtime
 
-        /*int r = (int)Math.Round(background.color.r);
-        int g = (int)Math.Round(background.color.g);
-        int b = (int)Math.Round(background.color.b);*/
         int r = (int)Math.Round(Camera.main.backgroundColor.r*255);
         int g = (int)Math.Round(Camera.main.backgroundColor.g*255);
         int b = (int)Math.Round(Camera.main.backgroundColor.b*255);
