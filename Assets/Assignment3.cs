@@ -5,20 +5,24 @@ using UnityEngine;
 public class Assignment3 : ProcessingLite.GP21
 {
     // Start is called before the first frame update
-    Vector2 circleVector;
-    Vector2 inBetween;
+    Vector2 circleVector,inBetween,direction;
+    public float speed = 0;
+    float moveSpeed = 0;
+    float circleDiameter = 3;
+    float gravity = 0.02f;
     void Start()
     {
-
     }
 
     // Update is called once per frame
     void Update()
     {
         Background(0);
+        gravityFall();
         TeleportCircle();
         DrawLineToMouse();
-        MoveCircleToTowardsMouse();
+        MoveCircleTowardsMouse();
+        BounceOnWalls();
     }
     private void TeleportCircle()
     {
@@ -26,22 +30,46 @@ public class Assignment3 : ProcessingLite.GP21
         {
             circleVector = new Vector2(MouseX, MouseY);
         }
-        Circle(circleVector.x, circleVector.y, 3);
+        Circle(circleVector.x, circleVector.y, circleDiameter);
+    }
+    private void gravityFall()
+    {
+        float breakFriction = direction.x * Time.deltaTime / 2;
+        if (circleVector.y >= 0 + circleDiameter / 2  + 0.1f && circleVector.y <= 10 - circleDiameter / 2 + 0.1f)
+        {
+            direction.y -= gravity * Time.deltaTime;
+        }
+        direction.x -= breakFriction;
     }
     private void DrawLineToMouse()
     {
         if (Input.GetMouseButton(0))
         {
-            Line(circleVector.x,circleVector.y,MouseX,MouseY);
+            Line(circleVector.x, circleVector.y, MouseX, MouseY);
             inBetween = new Vector2(MouseX, MouseY) - circleVector;
-            Debug.Log(inBetween);
+            direction = new Vector2(0, 0);
+            moveSpeed = 0;
         }
     }
-    private void MoveCircleToTowardsMouse()
+    private void MoveCircleTowardsMouse()
     {
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButtonUp(0))
         {
-            circleVector = new Vector2(circleVector.x + inBetween.x / 300, circleVector.y + inBetween.y / 300);
+            moveSpeed = speed * Time.deltaTime;
+            moveSpeed = Mathf.Clamp(moveSpeed, 0, 0.005f);
+            direction = new Vector2(inBetween.x, inBetween.y) * moveSpeed;
+        }
+        circleVector += direction;
+    }
+    private void BounceOnWalls()
+    {
+        if (circleVector.x <= 0 + circleDiameter / 2 || circleVector.x >= Width - circleDiameter / 2)
+        {
+            direction.x *= -0.8f;
+        }
+        else if (circleVector.y <= 0 + circleDiameter / 2 || circleVector.y >= Height - circleDiameter / 2)
+        {
+            direction.y *= -0.8f;
         }
     }
 }
