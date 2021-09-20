@@ -290,8 +290,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   baseSpeed: 5
-  acceleration: 5
-  maxSpeed: 8
+  acceleration: 8
+  deacceleration: 5
+  maxSpeed: 15
 --- !u!1 &1284526215
 GameObject:
   m_ObjectHideFlags: 0
