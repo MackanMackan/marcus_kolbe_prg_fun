@@ -7,11 +7,15 @@ public class Assignment4 : ProcessingLite.GP21
     // Start is called before the first frame update
     private float speed;
     public float baseSpeed;
-    public float acceleration;
-    public float deacceleration;
     public float maxSpeed = 15;
     Vector2 characterPos = new Vector2(1, 1);
     Vector2 character2Pos = new Vector2(1, 1);
+    Vector2 velocity;
+    Vector2 acceleration;
+    Vector2 deacceleration;
+    float deaccX;
+    float deaccY;
+    public float deaccValue;
     Vector2 continousDirection = new Vector2(0, 0);
     void Start()
     {
@@ -24,12 +28,12 @@ public class Assignment4 : ProcessingLite.GP21
     {
         Background(0);
         moveCharacter();
-       // moveOtherCharacter();
+        // moveOtherCharacter();
     }
     public void moveOtherCharacter()
     {
         Vector2 input = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-        if (input.magnitude!= 0)
+        if (input.magnitude != 0)
         {
             characterPos.x += Input.GetAxis("Horizontal") * baseSpeed * Time.deltaTime;
             characterPos.y += Input.GetAxis("Vertical") * baseSpeed * Time.deltaTime;
@@ -38,32 +42,34 @@ public class Assignment4 : ProcessingLite.GP21
     }
     public void moveCharacter()
     {
-        Vector2 input = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+        Vector2 input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
         input.Normalize();
-        if (input.magnitude != 0 && Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
-        {
-            character2Pos.x += Input.GetAxis("Horizontal") * speed * Time.deltaTime;
-            character2Pos.y += Input.GetAxis("Vertical") * speed * Time.deltaTime;
-            speed += acceleration * Time.deltaTime;
+        float x = input.x * speed * Time.deltaTime;
+        float y = input.y * speed * Time.deltaTime;
 
-            if (character2Pos.magnitude > maxSpeed)
+        acceleration = new Vector2(x, y);
+        velocity += acceleration * Time.deltaTime;
+
+
+        if (velocity.magnitude > maxSpeed)
+        {
+            velocity = velocity.normalized * maxSpeed;
+        }
+
+        if (acceleration == Vector2.zero)
+        {
+            deacceleration = new Vector2(1 + deaccValue * 0.001f, 1 + deaccValue * 0.001f);
+            velocity /= deacceleration;
+            if (velocity.magnitude < 0.0001f)
             {
-                speed =  maxSpeed;
+                velocity *= 0;
             }
-            continousDirection = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-            continousDirection.Normalize();
         }
-        else if(character2Pos.magnitude == 0)
-        {
-           speed = baseSpeed;
-        }
-        else
-        {
-            speed -= deacceleration * Time.deltaTime;
-            speed = Mathf.Clamp(speed, 0, 20);
-            character2Pos.x += continousDirection.x * speed * Time.deltaTime;
-            character2Pos.y += continousDirection.y * speed * Time.deltaTime;
-        }
+
+        character2Pos.x = (character2Pos.x + Width) % Width;
+        character2Pos.y = (character2Pos.y + Height) % Height;
+
+        character2Pos += velocity;
         Circle(character2Pos.x, character2Pos.y, 0.5f);
     }
 }
