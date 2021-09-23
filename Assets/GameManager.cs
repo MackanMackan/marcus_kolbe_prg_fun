@@ -15,7 +15,6 @@ public class GameManager : ProcessingLite.GP21
             balls[i] = new Ball(Width / 2, Height / 2);
         }
 
-        player = new Player();
     }
     // Update is called once per frame
     void Update()
@@ -42,13 +41,13 @@ public class GameManager : ProcessingLite.GP21
     }
     void DrawPlayer()
     {
-        player.MoveCharacter();
+        GetComponent<Player>().MoveCharacter();
     }
     bool CheckDeadCondition()
     {
         foreach (Ball ball in balls)
         {
-            if (ball.CircleCollision(ball, player))
+            if (ball.CircleCollision(ball, GetComponent<Player>()))
             {
                 return true;
             }
