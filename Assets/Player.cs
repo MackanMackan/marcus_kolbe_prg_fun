@@ -7,20 +7,24 @@ public class Player : ProcessingLite.GP21
     public float speed;
     public float maxSpeed = 15;
     float size = 0.5f;
-    Vector2 position = new Vector2(1, 1);
+    Vector2 position;
     Vector2 velocity;
     Vector2 acceleration;
     Vector2 deacceleration;
     public float deaccValue;
+
+    List<Shoot> shot;
     // Start is called before the first frame update
     void Start()
     {
-        
+        position = new Vector2(Width/2, Height/2);
+        shot = new List<Shoot>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        ShootGun();
     }
     public void MoveCharacter()
     {
@@ -52,6 +56,7 @@ public class Player : ProcessingLite.GP21
         position.y = (position.y + Height) % Height;
 
         position += velocity;
+        Fill(0,0,0);
         Circle(position.x, position.y, size);
     }
     public float getPlayerSize()
@@ -62,5 +67,11 @@ public class Player : ProcessingLite.GP21
     {
         return position;
     }
-
+    public void ShootGun()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            new Shoot(position);
+        }
+    }
 }

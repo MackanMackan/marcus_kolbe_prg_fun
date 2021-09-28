@@ -4,16 +4,14 @@ using UnityEngine;
 
 public class GameManager : ProcessingLite.GP21
 {
-    int numberOfBalls = 10;
-    Ball[] balls;
-    Player player;
+    List<Zombie> zombies;
+    Timer timer;
     void Start()
     {
-        balls = new Ball[numberOfBalls];
-        for (int i = 0; i < balls.Length; i++)
-        {
-            balls[i] = new Ball(Width / 2, Height / 2);
-        }
+        timer = GetComponent<Timer>();
+        zombies = new List<Zombie>();
+
+        StartCoroutine(ZombieSpawner(1));
 
     }
     // Update is called once per frame
@@ -22,32 +20,34 @@ public class GameManager : ProcessingLite.GP21
         if (!CheckDeadCondition())
         {
             Background(0);
-            DrawBalls();
+            DrawZombies();
             DrawPlayer();
         }
         else
         {
             GameOverScreen();
+            timer.StopTimer();
         }
+        DrawTimer();
     }
-    void DrawBalls()
+    void DrawZombies()
     {
-        for (int i = 0; i < balls.Length; i++)
+        foreach (Zombie zombie in zombies)
         {
-            balls[i].UpdatePos();
-            balls[i].Draw();
-            balls[i].BounceOnScreen();
+            zombie.ChasePlayer(GetComponent<Player>());
+            zombie.DrawZombie();
         }
     }
     void DrawPlayer()
     {
+        Stroke(255,255,255);
         GetComponent<Player>().MoveCharacter();
     }
     bool CheckDeadCondition()
     {
-        foreach (Ball ball in balls)
+        foreach (Zombie zombie in zombies)
         {
-            if (ball.CircleCollision(ball, GetComponent<Player>()))
+            if (zombie.CheckPlayerCought(GetComponent<Player>()))
             {
                 return true;
             }
@@ -57,5 +57,25 @@ public class GameManager : ProcessingLite.GP21
     void GameOverScreen()
     {
         Background(0);
+        GetComponent<ScreenWriter>().WriteGameOver(3,Height/2);
+    }
+    void DrawTimer()
+    {
+        timer.PaintDigitalClock(0.5f,Height - 1);
+    }
+    IEnumerator ZombieSpawner(float secondsToWait)
+    {
+        while (true)
+        {
+            int seconds = timer.GetSeconds();
+            int minutes = timer.GetMinutes();
+            int amountOfZombies = seconds/3 * (minutes + 1);
+
+            for (int i = 0; i < amountOfZombies; i++)
+            {
+                zombies.Add(new Zombie(Width, Height));
+            }
+            yield return new WaitForSeconds(secondsToWait);
+        }
     }
 }

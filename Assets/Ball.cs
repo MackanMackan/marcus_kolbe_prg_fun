@@ -27,6 +27,7 @@ public class Ball : ProcessingLite.GP21
     //Draw our ball
     public void Draw()
     {
+        Stroke(255, 0, 0);
         Circle(position.x, position.y, size);
     }
 
