@@ -5,11 +5,14 @@ using UnityEngine;
 public class GameManager : ProcessingLite.GP21
 {
     List<Zombie> zombies;
+    List<Shoot> shots;
+
     Timer timer;
     void Start()
     {
         timer = GetComponent<Timer>();
         zombies = new List<Zombie>();
+        shots = new List<Shoot>();
 
         StartCoroutine(ZombieSpawner(1));
 
@@ -22,6 +25,9 @@ public class GameManager : ProcessingLite.GP21
             Background(0);
             DrawZombies();
             DrawPlayer();
+            ShootGun();
+            DrawShots();
+            checkZombieShot();
         }
         else
         {
@@ -76,6 +82,44 @@ public class GameManager : ProcessingLite.GP21
                 zombies.Add(new Zombie(Width, Height));
             }
             yield return new WaitForSeconds(secondsToWait);
+        }
+    }
+    public void ShootGun()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            shots.Add(new Shoot(GetComponent<Player>().GetPlayerPosition()));
+        }
+    }
+    public void DrawShots()
+    {
+        foreach (Shoot shots in shots)
+        {
+
+            shots.DrawShot();
+        }
+    }
+    void checkZombieShot()
+    {
+        int shotIncrement = 0;
+        int zombieIncrement = 0;
+
+        foreach(Shoot shot in shots)
+        {
+
+            foreach(Zombie zombie in zombies)
+            {
+                if (zombie.ZombieShot(shot))
+                {
+                    Debug.Log(zombieIncrement);
+                    shots.RemoveAt(shotIncrement);
+                    zombies.RemoveAt(zombieIncrement);
+                }
+
+                zombieIncrement++;
+            }
+            zombieIncrement = 0;
+            shotIncrement++;
         }
     }
 }

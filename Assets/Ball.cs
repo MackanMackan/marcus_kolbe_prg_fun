@@ -68,17 +68,17 @@ public class Ball : ProcessingLite.GP21
     }
     public bool CircleCollision(Ball ball1, Player ball2)
     {
-        float maxDistance = ball1.size + ball2.getPlayerSize();
+        float maxDistance = ball1.size + ball2.GetPlayerSize();
 
         //first a quick check to see if we are too far away in x or y direction
         //if we are far away we don't collide so just return false and be done.
-        if (Mathf.Abs(ball1.position.x - ball2.getPlayerPosition().x) > maxDistance || Mathf.Abs(ball1.position.y - ball2.getPlayerPosition().y) > maxDistance)
+        if (Mathf.Abs(ball1.position.x - ball2.GetPlayerPosition().x) > maxDistance || Mathf.Abs(ball1.position.y - ball2.GetPlayerPosition().y) > maxDistance)
         {
             return false;
         }
         //we then run the slower distance calculation
         //Distance uses Pythagoras to get exact distance, if we still are to far away we are not colliding.
-        else if (Vector2.Distance(new Vector2(ball1.position.x, ball1.position.y), new Vector2(ball2.getPlayerPosition().x, ball2.getPlayerPosition().y)) > maxDistance)
+        else if (Vector2.Distance(new Vector2(ball1.position.x, ball1.position.y), new Vector2(ball2.GetPlayerPosition().x, ball2.GetPlayerPosition().y)) > maxDistance)
         {
             return false;
         }

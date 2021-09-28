@@ -12,7 +12,7 @@ public class ScreenWriter : ProcessingLite.GP21
     // Update is called once per frame
     void Update()
     {
-        Stroke(0, 240, 50);
+       
     }
     public void WriteAAt(float x, float y)
     {
@@ -59,6 +59,7 @@ public class ScreenWriter : ProcessingLite.GP21
     }
     public void WriteGameOver(float x, float y)
     {
+        Stroke(0, 240, 50);
         WriteGAt(x, y);
         WriteAAt(x + 4, y);
         WriteMAt(x+7,y);

@@ -5,14 +5,14 @@ using UnityEngine;
 public class Shoot : ProcessingLite.GP21
 {
     Vector2 shotPos;
-    float size = 0.2f;
-    float bulletSpeed = 0.5f;
+    float size = 0.1f;
+    float bulletSpeed = 20f;
     Player player;
     Vector2 dist;
     public Shoot(Vector2 playerPos)
     {
-        shotPos = playerPos + new Vector2(MouseX,MouseY).normalized;
-        dist = playerPos + new Vector2(MouseX, MouseY);
+        shotPos = playerPos;
+        dist = new Vector2(MouseX, MouseY) - playerPos;
     }
     void Start()
     {
@@ -21,9 +21,8 @@ public class Shoot : ProcessingLite.GP21
     // Update is called once per frame
     void Update()
     {
-        DrawShot();
     }
-    void DrawShot()
+    public void DrawShot()
     {
         Stroke(240,240,30);
         Fill(240,240,30);
@@ -34,10 +33,6 @@ public class Shoot : ProcessingLite.GP21
         shotPos += dist;
 
         Circle(shotPos.x, shotPos.y, size);
-    }
-    public void ShootGun()
-    {
-        
     }
     public Vector2 GetShotPosition()
     {

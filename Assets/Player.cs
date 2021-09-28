@@ -13,18 +13,16 @@ public class Player : ProcessingLite.GP21
     Vector2 deacceleration;
     public float deaccValue;
 
-    List<Shoot> shot;
+    
     // Start is called before the first frame update
     void Start()
     {
         position = new Vector2(Width/2, Height/2);
-        shot = new List<Shoot>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        ShootGun();
     }
     public void MoveCharacter()
     {
@@ -59,19 +57,12 @@ public class Player : ProcessingLite.GP21
         Fill(0,0,0);
         Circle(position.x, position.y, size);
     }
-    public float getPlayerSize()
+    public float GetPlayerSize()
     {
         return size;
     }
-    public Vector2 getPlayerPosition()
+    public Vector2 GetPlayerPosition()
     {
         return position;
-    }
-    public void ShootGun()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            new Shoot(position);
-        }
     }
 }

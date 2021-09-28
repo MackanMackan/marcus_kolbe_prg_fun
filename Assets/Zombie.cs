@@ -27,7 +27,7 @@ public class Zombie : ProcessingLite.GP21
     }
     public void ChasePlayer(Player player)
     {
-        Vector2 dist = player.getPlayerPosition() - zombiePos;
+        Vector2 dist = player.GetPlayerPosition() - zombiePos;
         dist.Normalize();
         dist *= speed * Time.deltaTime;
 
@@ -36,17 +36,17 @@ public class Zombie : ProcessingLite.GP21
 
     public bool CheckPlayerCought(Player player)
     {
-        float maxDistance = size / 2 + player.getPlayerSize() / 2;
+        float maxDistance = size / 2 + player.GetPlayerSize() / 2;
 
         //first a quick check to see if we are too far away in x or y direction
         //if we are far away we don't collide so just return false and be done.
-        if (Mathf.Abs(zombiePos.x - player.getPlayerPosition().x) > maxDistance || Mathf.Abs(zombiePos.y - player.getPlayerPosition().y) > maxDistance)
+        if (Mathf.Abs(zombiePos.x - player.GetPlayerPosition().x) > maxDistance || Mathf.Abs(zombiePos.y - player.GetPlayerPosition().y) > maxDistance)
         {
             return false;
         }
         //we then run the slower distance calculation
         //Distance uses Pythagoras to get exact distance, if we still are to far away we are not colliding.
-        else if (Vector2.Distance(new Vector2(zombiePos.x, zombiePos.y), new Vector2(player.getPlayerPosition().x, player.getPlayerPosition().y)) > maxDistance)
+        else if (Vector2.Distance(new Vector2(zombiePos.x, zombiePos.y), new Vector2(player.GetPlayerPosition().x, player.GetPlayerPosition().y)) > maxDistance)
         {
             return false;
         }
@@ -56,7 +56,7 @@ public class Zombie : ProcessingLite.GP21
             return true;
         }
     }
-    bool ZombieShot(Shoot shot)
+    public bool ZombieShot(Shoot shot)
     {
         float maxDistance = size / 2 + shot.GetShotSize() / 2;
 
