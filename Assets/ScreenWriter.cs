@@ -4,16 +4,7 @@ using UnityEngine;
 
 public class ScreenWriter : ProcessingLite.GP21
 {
-    void Start()
-    {
 
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-       
-    }
     public void WriteAAt(float x, float y)
     {
         Line(x, y, x + 1, y + 4);

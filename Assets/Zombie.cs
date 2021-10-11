@@ -6,25 +6,15 @@ public class Zombie : ProcessingLite.GP21
 {
     float size = 0.5f;
     float speed = 2f;
-    float maxSpeed = 0.15f;
 
     Vector2 velocity;
-    Vector2 acceleration;
     Vector2 zombiePos;
 
-    Shoot shot;
-    Player player;
     public Zombie(float width, float height)
     {
         SpawnZombie(width, height);
     }
-    void Start()
-    {
-    }
 
-    void Update()
-    {
-    }
     public void ChasePlayer(Player player)
     {
         Vector2 dist = player.GetPlayerPosition() - zombiePos;

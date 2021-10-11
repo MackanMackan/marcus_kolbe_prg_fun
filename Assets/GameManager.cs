@@ -46,7 +46,7 @@ public class GameManager : ProcessingLite.GP21
     }
     void DrawPlayer()
     {
-        Stroke(255,255,255);
+        Stroke(255, 255, 255);
         GetComponent<Player>().MoveCharacter();
     }
     bool CheckDeadCondition()
@@ -63,11 +63,11 @@ public class GameManager : ProcessingLite.GP21
     void GameOverScreen()
     {
         Background(0);
-        GetComponent<ScreenWriter>().WriteGameOver(3,Height/2);
+        GetComponent<ScreenWriter>().WriteGameOver(3, Height / 2);
     }
     void DrawTimer()
     {
-        timer.PaintDigitalClock(0.5f,Height - 1);
+        timer.PaintDigitalClock(0.5f, Height - 1);
     }
     IEnumerator ZombieSpawner(float secondsToWait)
     {
@@ -75,7 +75,7 @@ public class GameManager : ProcessingLite.GP21
         {
             int seconds = timer.GetSeconds();
             int minutes = timer.GetMinutes();
-            int amountOfZombies = seconds/3 * (minutes + 1);
+            int amountOfZombies = seconds / 3 * (minutes + 1);
 
             for (int i = 0; i < amountOfZombies; i++)
             {
@@ -103,20 +103,34 @@ public class GameManager : ProcessingLite.GP21
     {
         int shotIncrement = 0;
         int zombieIncrement = 0;
-
-        foreach(Shoot shot in shots)
+        bool zombieGotShot = false;
+        //For each shot, check if it hits any zombie on board. if true, then remove both the shot and the zombie
+        foreach (Shoot shot in shots)
         {
+            // if shot is out of screen, remove it for prestanda purposes
+            if (shot.GetShotPosition().x % Width <= 0 || shot.GetShotPosition().y % Height <= 0 
+                || shot.GetShotPosition().x >= Width || shot.GetShotPosition().y >= Height)
+            {
+                shots.RemoveAt(shotIncrement);
+                break;
+            }
 
-            foreach(Zombie zombie in zombies)
+            foreach (Zombie zombie in zombies)
             {
                 if (zombie.ZombieShot(shot))
                 {
-                    Debug.Log(zombieIncrement);
                     shots.RemoveAt(shotIncrement);
                     zombies.RemoveAt(zombieIncrement);
+                    zombieGotShot = true;
+                    break;
                 }
 
                 zombieIncrement++;
+            }
+            if (zombieGotShot)
+            {
+                zombieGotShot = false;
+                break;
             }
             zombieIncrement = 0;
             shotIncrement++;

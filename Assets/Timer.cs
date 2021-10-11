@@ -8,10 +8,6 @@ public class Timer : ProcessingLite.GP21
     float timer = 0;
     int seconds;
     int minutes;
-    void Start()
-    {
-        
-    }
 
     // Update is called once per frame
     void Update()

@@ -20,10 +20,7 @@ public class Player : ProcessingLite.GP21
         position = new Vector2(Width/2, Height/2);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-    }
+
     public void MoveCharacter()
     {
         Vector2 input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
