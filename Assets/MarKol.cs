@@ -6,12 +6,30 @@ public class MarKol : IRandomWalker
 {
     //Add your own variables here.
     //Do not use processing variables like width or height
-    Vector2 positon;
-    Direction dir;
+    Vector2 myPosition;
+    Vector2 velocityDirection;
+    Direction direction;
     int playAreaWidth;
     int playAreaHeight;
+    float scaleFactor = 0.05f;
+    int circleOffsetY = 0;
+    int circleOffsetX = 0;
     int newPlayAreaHeight;
     int newPlayAreaWidth;
+    Vector2 oldBorder;
+
+    JesCed enemy1 = new JesCed();
+    EriLoc enemy2 = new EriLoc();
+    CarChr enemy3 = new CarChr();
+    FurCir enemy4 = new FurCir();
+    JesJoh enemy5 = new JesJoh();
+    MarTve enemy6 = new MarTve();
+    NiaAnd enemy7 = new NiaAnd();
+    PonTor enemy8 = new PonTor();
+    OskNor enemy9 = new OskNor();
+    MayWin enemy10 = new MayWin();
+    List<IRandomWalker> enemies = new List<IRandomWalker>();
+    ProcessingLite.GP21 pl = new ProcessingLite.GP21();
 
     public string GetName()
     {
@@ -20,52 +38,101 @@ public class MarKol : IRandomWalker
 
     public Vector2 GetStartPosition(int playAreaWidth, int playAreaHeight)
     {
-        this.playAreaWidth = Mathf.RoundToInt(playAreaWidth);
-        this.playAreaHeight = Mathf.RoundToInt(playAreaHeight);
+        this.playAreaWidth = playAreaWidth;
+        this.playAreaHeight = playAreaHeight;
+
         //Select a starting position or use a random one.
 
-        float x = Random.Range(0, playAreaWidth);
-        float y = Random.Range(0, playAreaHeight);
-        positon = new Vector2(x, y);
-        dir = Direction.Down;
+        int x = playAreaWidth -1;
+        int y = playAreaHeight-1;
+
+        myPosition = new Vector2(x, y);
+        direction = Direction.Down;
+
+        enemies.Add(enemy1);
+        enemies.Add(enemy2);
+        enemies.Add(enemy3);
+        enemies.Add(enemy4);
+        enemies.Add(enemy5);
+        enemies.Add(enemy6);
+        enemies.Add(enemy7);
+        enemies.Add(enemy8); 
+        enemies.Add(enemy9);
+        enemies.Add(enemy10);
         //a PVector holds floats but make sure its whole numbers that are returned!
-        return positon;
+        return myPosition;
     }
 
     public Vector2 Movement()
     {
         //add your own walk behavior for your walker here.
         //Make sure to only use the outputs listed below.
-        if (positon.x < 0)
+        pl.Fill(59,112,192);
+        pl.Stroke(59, 112, 192);
+        pl.Square((Random.Range(60, playAreaWidth - 60)) * scaleFactor, Random.Range(60, playAreaHeight - 60) * scaleFactor, 5f);
+        pl.Stroke(255, 255, 255);
+
+        for (int i = 0; i > enemies.Count; i++)
         {
-            dir = Direction.Right;
+            if (enemies[i].Movement().x == myPosition.x + 1 && direction == Direction.Right)
+            {
+                direction = Direction.Up;
+            }
+            if (enemies[i].Movement().x == myPosition.x - 1 && direction == Direction.Left)
+            {
+                direction = Direction.Down;
+            }
+            if (enemies[i].Movement().y == myPosition.y + 1 && direction == Direction.Up)
+            {
+                direction = Direction.Left;
+            }
+            if (enemies[i].Movement().y == myPosition.y - 1 && direction == Direction.Down)
+            {
+                direction = Direction.Right;
+            }
         }
-        if (positon.x > playAreaWidth)
+        if (myPosition.x < 1)
         {
-            dir = Direction.Left;
+            direction = Direction.Down;
+            myPosition.x += 1;
+            circleOffsetX = 100;
+            return new Vector2(1, 0);
         }
-        if (positon.y > playAreaHeight)
+        if (myPosition.x > playAreaWidth - 1)
         {
-            dir = Direction.Down;
+            direction = Direction.Up;
+            myPosition.x -= 1;
+            circleOffsetX = -100;
+            return new Vector2(-1, 0);
         }
-        if (positon.y < 0)
+        if (myPosition.y > playAreaHeight - 1)
         {
-            dir = Direction.Up;
+            direction = Direction.Left;
+            myPosition.y -= 1;
+            circleOffsetY = -100;
+            return new Vector2(0, -1);
+        }
+        if (myPosition.y < 1)
+        {
+            direction = Direction.Right;
+            myPosition.y += 1;
+            circleOffsetY = 100;
+            return new Vector2(0, 1);
         }
 
-        switch (dir)
+        switch (direction)
         {
             case Direction.Left:
-                positon += new Vector2(-1, 0);
+                myPosition += new Vector2(-1, 0);
                 return new Vector2(-1, 0);
             case Direction.Right:
-                positon += new Vector2(1, 0);
+                myPosition += new Vector2(1, 0);
                 return new Vector2(1, 0);
             case Direction.Up:
-                positon += new Vector2(0, 1);
+                myPosition += new Vector2(0, 1);
                 return new Vector2(0, 1);
             default:
-                positon += new Vector2(0, -1);
+                myPosition += new Vector2(0, -1);
                 return new Vector2(0, -1);
         }
     }

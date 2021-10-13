@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class MarKol1 : MonoBehaviour, IRandomWalker
+public class EriLoc : MonoBehaviour, IRandomWalker
 {
 	//Add your own variables here.
 	//Do not use processing variables like width or height
 	List<IRandomWalker> enemies;
-	int amountOfEnemies = 0;
 
 	public string GetName()
 	{
@@ -31,7 +30,6 @@ public class MarKol1 : MonoBehaviour, IRandomWalker
 	{
 		//add your own walk behavior for your walker here.
 		//Make sure to only use the outputs listed below.
-		Debug.Log(amountOfEnemies);
 		switch (Random.Range(0, 4))
 		{
 			case 0:
