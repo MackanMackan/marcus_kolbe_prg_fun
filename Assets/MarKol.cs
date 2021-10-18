@@ -106,7 +106,10 @@ public class MarKol : IRandomWalker
     {
         //add your own walk behavior for your walker here.
         //Make sure to only use the outputs listed below.
-        //pl.Square((Random.Range(60, playAreaWidth - 60)) * scaleFactor, Random.Range(60, playAreaHeight - 60) * scaleFactor, 5f);
+        pl.Stroke(59,112,192);
+        pl.Fill(59, 112, 192);
+        pl.Square((Random.Range(60, playAreaWidth - 60)) * scaleFactor, Random.Range(60, playAreaHeight - 60) * scaleFactor, 5f);
+        pl.Stroke(255,255,255);
 
         for (int i = 0; i > enemies.Count; i++)
         {

@@ -7,11 +7,11 @@ public class WalkerTest : ProcessingLite.GP21
 	//This file is only for testing your movement/behavior.
 	//The Walkers will compete in a different program!
 
-	IRandomWalker walker;
-	Vector2 walkerPos;
+	IRandomWalker marKol;
+	Vector2 MarKolPos;
 
-	IRandomWalker walker1;
-	Vector2 walkerPos1;
+	IRandomWalker jesCed;
+	Vector2 jesCedPos;
 
 	float scaleFactor = 0.05f;
 
@@ -22,25 +22,25 @@ public class WalkerTest : ProcessingLite.GP21
 		QualitySettings.vSyncCount = 0;
 
 		//Create a walker from the class Example it has the type of WalkerInterface
-		walker = new MarKol();
-		walker1 = new JesCed();
+		marKol = new MarKol();
+		jesCed = new JesCed();
 
 		//Get the start position for our walker.
-		walkerPos = walker.GetStartPosition((int)(Width / scaleFactor) , (int)(Height / scaleFactor));
-		walkerPos1 = walker1.GetStartPosition((int)(Width / scaleFactor), (int)(Height / scaleFactor));
+		MarKolPos = marKol.GetStartPosition((int)(Width / scaleFactor) , (int)(Height / scaleFactor));
+		jesCedPos = jesCed.GetStartPosition((int)(Width / scaleFactor), (int)(Height / scaleFactor));
 	}
 
 	void Update()
 	{
 		//Draw the walker
 		Stroke(255, 0, 0);
-		Point(walkerPos.x * scaleFactor, walkerPos.y * scaleFactor);
+		Point(MarKolPos.x * scaleFactor, MarKolPos.y * scaleFactor);
 
 		Stroke(255, 255, 255);
-		Point(walkerPos1.x * scaleFactor, walkerPos1.y * scaleFactor);
+		Point(jesCedPos.x * scaleFactor, jesCedPos.y * scaleFactor);
 
 		//Get the new movement from the walker.
-		walkerPos += walker.Movement();
-		walkerPos1 += walker1.Movement();
+		MarKolPos += marKol.Movement();
+		jesCedPos += jesCed.Movement();
 	}
 }
