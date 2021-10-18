@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class JesCed : MonoBehaviour, IRandomWalker
+public class WilUll : MonoBehaviour, IRandomWalker
 {
 	//Add your own variables here.
 	//Do not use processing variables like width or height
 	List<IRandomWalker> enemies;
+
 	public string GetName()
 	{
-		return "Jessica"; //When asked, tell them our walkers name
+		return "Kolbe"; //When asked, tell them our walkers name
 	}
 
 	public Vector2 GetStartPosition(int playAreaWidth, int playAreaHeight)

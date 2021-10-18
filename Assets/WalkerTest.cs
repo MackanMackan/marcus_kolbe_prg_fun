@@ -9,8 +9,10 @@ public class WalkerTest : ProcessingLite.GP21
 
 	IRandomWalker walker;
 	Vector2 walkerPos;
+
 	IRandomWalker walker1;
 	Vector2 walkerPos1;
+
 	float scaleFactor = 0.05f;
 
 	void Start()
@@ -31,8 +33,12 @@ public class WalkerTest : ProcessingLite.GP21
 	void Update()
 	{
 		//Draw the walker
+		Stroke(255, 0, 0);
 		Point(walkerPos.x * scaleFactor, walkerPos.y * scaleFactor);
+
+		Stroke(255, 255, 255);
 		Point(walkerPos1.x * scaleFactor, walkerPos1.y * scaleFactor);
+
 		//Get the new movement from the walker.
 		walkerPos += walker.Movement();
 		walkerPos1 += walker1.Movement();
