@@ -4,7 +4,7 @@ public class SineWave : ProcessingLite.GP21
 {
     [SerializeField]
     float xspacing = 0.18f;
-    float theta = 0.0f;
+    float direction = 0.0f;
     [SerializeField]
     float amplitude = 1.4f;
     [SerializeField]
@@ -31,9 +31,9 @@ public class SineWave : ProcessingLite.GP21
 
     void CalculateWave()
     {
-        theta += 0.1f;
+        direction += 0.1f;
 
-        float x = theta;
+        float x = direction;
         for (int i = 0; i < yvaluesSin.Length; i++)
         {
             yvaluesSin[i] = Mathf.Sin(x) * amplitude;

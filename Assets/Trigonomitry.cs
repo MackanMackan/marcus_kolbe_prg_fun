@@ -8,32 +8,58 @@ public class Trigonomitry : ProcessingLite.GP21
     float y;
     float x;
     float direction = 0;
-    float offset = 0.1f;
-    float speed = 0.15f;
-
-    Vector2 position = new Vector2(0,2);
+    float offset = 0.18f;
+    float speed = 20f;
+    float dx;
+    [SerializeField]
+    int amountOfBalls = 10;
+    [SerializeField]
+    float ballSpacing = 0.1f;
+    [SerializeField]
+    float ballSize = 0.1f;
+    float ballDirection = 0;
     void Start()
     {
+        QualitySettings.vSyncCount = 0;
         Application.targetFrameRate = 30;
-        //Camera.main.transform.position = new Vector2(0, 0);
+        dx = (Mathf.Pow(Mathf.PI, 2) / speed) * offset;
+        NoStroke();
     }
 
     // Update is called once per frame
     void Update()
     {
-        Background(128);
+        Background(0);
+        PaintSineWave();
+        PaintCircle();
 
+    }
+    void PaintSineWave()
+    {
+        direction += 0.1f;
+        float xX = direction;
         for (int i = 0; i < 100; i++)
         {
-            x = Mathf.Cos(direction);
-            y = Mathf.Sin(direction);
-            Circle(position.x+=offset, Height/2+y, 0.1f);
-            position.x += offset;
-            direction += (speed * Time.deltaTime)/4;
+            x = Mathf.Cos(xX);
+            y = Mathf.Sin(xX);
+            Fill(255, 0, 0);
+            Ellipse(i * offset, Height / 2 + y, 0.1f, 0.1f);
+            Fill(128, 128, 128);
+            Ellipse(i * offset, Height / 2 + x, 0.1f, 0.1f);
+            xX += dx;
         }
-        position.x = 0;
-        position.y = 0;
-        // Circle(position.x, Height/2, 0.5f);
     }
-
+    void PaintCircle()
+    {
+        ballDirection += 0.1f;
+        float xX = ballDirection;
+        for (int i = 0; i < amountOfBalls; i++)
+        {
+            x = Mathf.Cos(xX);
+            y = Mathf.Sin(xX);
+            Fill(255, 60, 80);
+            Ellipse(x+i*ballSpacing, y + i * ballSpacing, ballSize, ballSize);
+            xX += dx;
+        }
+    }
 }
