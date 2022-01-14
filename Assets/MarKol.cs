@@ -21,32 +21,7 @@ public class MarKol : IRandomWalker
     int newPlayAreaWidth;
     Vector2 oldBorder;
 
-    JesCed enemy1 = new JesCed();
-    EriLoc enemy2 = new EriLoc();
-    CarChr enemy3 = new CarChr();
-    FurCir enemy4 = new FurCir();
-    JesJoh enemy5 = new JesJoh();
-    MarTve enemy6 = new MarTve();
-    NiaAnd enemy7 = new NiaAnd();
-    PonTor enemy8 = new PonTor();
-    OskNor enemy9 = new OskNor();
-    MayWin enemy10 = new MayWin();
-    JacClo enemy11 = new JacClo();
-    JamKal enemy12 = new JamKal();
-    DanRed enemy13 = new DanRed();
-    JonPan enemy14 = new JonPan();
-    AliEri enemy15 = new AliEri();
-    AntPol enemy16 = new AntPol();
-    CarHag enemy17 = new CarHag();
-    EriJoh enemy18 = new EriJoh();
-    HelLar enemy19 = new HelLar();
-    LuiVec enemy20 = new LuiVec();
-    MarRun enemy21 = new MarRun();
-    NikJor enemy22 = new NikJor();
-    RikRoh enemy23 = new RikRoh();
-    VicAmi enemy24 = new VicAmi();
-    VikAnd enemy25 = new VikAnd();
-    WilUll enemy26 = new WilUll();
+    
 
 
     List<IRandomWalker> enemies = new List<IRandomWalker>();
@@ -70,32 +45,7 @@ public class MarKol : IRandomWalker
         myPosition = new Vector2(x, y);
         direction = Direction.Left;
 
-        enemies.Add(enemy1);
-        enemies.Add(enemy2);
-        enemies.Add(enemy3);
-        enemies.Add(enemy4);
-        enemies.Add(enemy5);
-        enemies.Add(enemy6);
-        enemies.Add(enemy7);
-        enemies.Add(enemy8); 
-        enemies.Add(enemy9);
-        enemies.Add(enemy10);
-        enemies.Add(enemy11);
-        enemies.Add(enemy12);
-        enemies.Add(enemy13);
-        enemies.Add(enemy14);
-        enemies.Add(enemy15);
-        enemies.Add(enemy16);
-        enemies.Add(enemy17);
-        enemies.Add(enemy18); 
-        enemies.Add(enemy19);
-        enemies.Add(enemy20);
-        enemies.Add(enemy21);
-        enemies.Add(enemy22);
-        enemies.Add(enemy23);
-        enemies.Add(enemy24);
-        enemies.Add(enemy25);
-        enemies.Add(enemy26);
+       
 
         startingPosition = myPosition;
         //a PVector holds floats but make sure its whole numbers that are returned!
@@ -108,7 +58,7 @@ public class MarKol : IRandomWalker
         //Make sure to only use the outputs listed below.
         pl.Stroke(59,112,192);
         pl.Fill(59, 112, 192);
-        pl.Square((Random.Range(60, playAreaWidth - 60)) * scaleFactor, Random.Range(60, playAreaHeight - 60) * scaleFactor, 5f);
+        //pl.Square((Random.Range(60, playAreaWidth - 60)) * scaleFactor, Random.Range(60, playAreaHeight - 60) * scaleFactor, 5f);
         pl.Stroke(255,255,255);
 
         for (int i = 0; i > enemies.Count; i++)

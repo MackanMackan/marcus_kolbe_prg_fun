@@ -33,7 +33,7 @@ public class WalkerTest : ProcessingLite.GP21
 	void Update()
 	{
 		//Draw the walker
-		Stroke(255, 0, 0);
+		Stroke(0, 0, 0);
 		Point(MarKolPos.x * scaleFactor, MarKolPos.y * scaleFactor);
 
 		Stroke(255, 255, 255);
